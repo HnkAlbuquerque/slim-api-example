@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx_slim
+    ports:
+      - "8000:80"
+    volumes:
+      - ./source:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php
+
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: php_slim
+    volumes:
+      - ./source:/var/www/html
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5.7.29
+    container_name: mysql_slim
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: db_slim
+      MYSQL_USER: db_slim
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+
+
+
+
+

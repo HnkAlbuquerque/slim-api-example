@@ -1,0 +1,9 @@
+.idea/
+.vscode/
+mysql/
+/coverage/
+/source/vendor/
+/logs/*
+.phpunit.result.cache
+.env
+!.env.sample
